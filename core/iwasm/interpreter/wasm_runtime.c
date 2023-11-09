@@ -1220,6 +1220,13 @@ wasm_instantiate(WASMModule *module, bool is_sub_inst, uint32 stack_size,
     module_inst->table_count = module->import_table_count + module->table_count;
     module_inst->function_count =
         module->import_function_count + module->function_count;
+    LOG_DEBUG("memory_count:%d, table_count:%d, function_count:%d",
+              module_inst->memory_count, module_inst->table_count,
+              module_inst->function_count);
+    for (int i = 0; i < module->import_function_count; ++i) {
+        LOG_DEBUG("import function[%d]:%s", i,
+                  module->import_functions[i].u.function.field_name);
+    }
 
     /* export */
     module_inst->export_func_count = get_export_count(module, EXPORT_KIND_FUNC);
